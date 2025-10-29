@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+  <header>
+    <h1>Abhinav Medikonda</h1>
+    <p>Software Engineer | Cloud & AI Enthusiast</p>
+  </header>
+
+  <main>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p style="text-align:center; max-width:700px; margin:auto;">
+        Hello! I'm Abhinav, a passionate software engineer with experience in cloud, DevOps, and AI/ML. 
+        I love building scalable systems and experimenting with cutting-edge technology.
+      </p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>☁️ Cloud Platforms: AWS, Azure, GCP</li>
+        <li>⚙️ DevOps: Docker, Kubernetes, Terraform, CI/CD</li>
+        <li>🤖 AI/ML: TensorFlow, PyTorch, NLP</li>
+        <li>💻 Programming: Python, Go, JavaScript</li>
+      </ul>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects">
+        <div class="project-card">
+          <h3>Project One</h3>
+          <p>A cloud-native app deployed with Kubernetes and Terraform.</p>
+        </div>
+        <div class="project-card">
+          <h3>Project Two</h3>
+          <p>AI-powered chatbot using NLP and deep learning.</p>
+        </div>
+        <div class="project-card">
+          <h3>Project Three</h3>
+          <p>CI/CD pipeline automation with GitHub Actions and Docker.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:abhinavmedikonda@hotmail.com">abhinavmedikonda@hotmail.com</a></p>
+      <p>LinkedIn: <a href="https://linkedin.com/in/abhinavmedikonda" target="_blank">linkedin.com/in/abhinavmedikonda</a></p>
+      <p>GitHub: <a href="https://github.com/abhinavmedikonda" target="_blank">github.com/abhinavmedikonda</a></p>
+    </section>
+  </main>
+
+  <footer class="footer1">
+    <p>&copy; 2025 Abhinav Medikonda. All rights reserved.</p>
+  </footer>
+
+  <footer>
+    <p style="text-align:center; max-width:700px; margin:auto;">
+      Every ending is a new beginning. Thank you for scrolling.
+    </p>
+  </footer>
+
+</body>
+</html>
