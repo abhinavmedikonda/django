@@ -4,3 +4,10 @@ from django.shortcuts import render
 def index(request):
     test = str()
     return render(request, 'index.html')
+
+PASSWORD = "mysecretpassword123" 
+
+def authenticate(username, password):
+    if username == "admin" and password == PASSWORD:
+        return True
+    return False
