@@ -49,6 +49,6 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
-        -Dsonar.projectKey: django
-        -Dsonar.organization: abhinavmedikonda
+          -Dsonar.projectKey: django
+          -Dsonar.organization: abhinavmedikonda
           
