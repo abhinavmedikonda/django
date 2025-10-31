@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v4
-    - name: official-sonarqube-scan
+    - name: sonar-scan
       # You may pin to the exact commit or the version.
       # uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402
       uses: SonarSource/sonarqube-scan-action@v6
@@ -53,7 +53,8 @@ jobs:
           -Dsonar.branch.name=${{ github.ref_name }}
           -Dsonar.qualitygate.wait=true
           -Dsonar.qualitygate.timeout=300
-    - name: quality-gate-check
+    - name: sonar-gate
+      if: always()
       uses: sonarsource/sonarqube-quality-gate-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
