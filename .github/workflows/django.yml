@@ -1,4 +1,4 @@
-name: django-ci
+name: django
 
 on:
   push:
@@ -15,9 +15,9 @@ jobs:
         python-version: [3.8, 3.9]
       fail-fast: false
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11bd71907b3cbb0e7e38b2117fdf7be6b3e7d24e # v4.2.2
     - name: set-up-python-${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@65d7e83e681a93c41b2e8dbb5d5e3cf03e07c0c1 # v5.1.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: install-dependencies
@@ -36,11 +36,9 @@ jobs:
         python-version: [3.8, 3.9]
       fail-fast: false
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11bd71907b3cbb0e7e38b2117fdf7be6b3e7d24e # v4.2.2
     - name: sonar-scan
-      # You may pin to the exact commit or the version.
-      # uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402
-      uses: SonarSource/sonarqube-scan-action@v6
+      uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402 # v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_SCANNER_OPTS: -Dsonar.qualitygate.wait=true
@@ -50,7 +48,7 @@ jobs:
           -Dsonar.organization=abhinavmedikonda
     - name: sonarQube-quality-gate-check
       id: qualitygate
-      uses: sonarsource/sonarqube-quality-gate-action@master
+      uses: SonarSource/sonarqube-quality-gate-action@923dcf4f7fcd3c2ef1dc201c10a03e2298e12c4b # latest master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
