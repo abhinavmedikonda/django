@@ -53,6 +53,11 @@ jobs:
           -Dsonar.branch.name=${{ github.ref_name }}
           -Dsonar.qualitygate.wait=true
           -Dsonar.qualitygate.timeout=300
+    - name: quality-gate-check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: https://sonarcloud.io
     - name: Print scanner report-task (always)
       if: always()
       run: |
