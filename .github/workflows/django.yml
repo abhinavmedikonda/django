@@ -43,11 +43,12 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_SCANNER_OPTS: -Dsonar.qualitygate.wait=true
       with:
         args: >
           -Dsonar.projectKey=django
           -Dsonar.organization=abhinavmedikonda
+          -Dsonar.qualitygate.wait=true 
+          -Dsonar.qualitygate.timeout=300
     - name: quality-gate-check
       uses: sonarsource/sonarqube-quality-gate-action@master
       env:
