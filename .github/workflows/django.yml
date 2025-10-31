@@ -1,4 +1,4 @@
-name: Django CI
+name: django-ci
 
 on:
   push:
@@ -8,21 +8,19 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
       fail-fast: false
-
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: set-up-python-${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
+    - name: install-dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -30,18 +28,16 @@ jobs:
       run: |
         python manage.py test
   
-  Quality:
-
+  sonar:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
       fail-fast: false
-
     steps:
     - uses: actions/checkout@v4
-    - name: Official SonarQube Scan
+    - name: sonar-scan
       # You may pin to the exact commit or the version.
       # uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402
       uses: SonarSource/sonarqube-scan-action@v6
@@ -52,4 +48,11 @@ jobs:
         args: >
           -Dsonar.projectKey=django
           -Dsonar.organization=abhinavmedikonda
-          
+    - name: sonarQube-quality-gate-check
+      id: qualitygate
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    - name: show-sonarqube-quality-gate-status
+      run: echo "Quality Gate status: ${{ steps.qualitygate.outputs.quality-gate-status }}"
