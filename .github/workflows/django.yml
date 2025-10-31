@@ -54,9 +54,28 @@ jobs:
           -Dsonar.branch.name=${{ github.ref_name }}
           -Dsonar.qualitygate.wait=true
           -Dsonar.qualitygate.timeout=300
-    - name: quality-gate-check
-      uses: sonarsource/sonarqube-quality-gate-action@master
+    - name: Print scanner report-task (always)
+      if: always()
+      run: |
+        echo "==== .scannerwork/report-task.txt ===="
+        if [ -f .scannerwork/report-task.txt ]; then
+          sed -n '1,200p' .scannerwork/report-task.txt || true
+        else
+          echo "No .scannerwork/report-task.txt found."
+        fi
+
+    - name: Fetch SonarCloud quality-gate summary (always)
+      if: always()
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
+        SONAR_PROJECT_KEY: django
+      run: |
+        echo "Querying SonarCloud for project status..."
+        set +e
+        # Fetch quality gate status for the project
+        curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_KEY}" | python -m json.tool || true
+        # Also fetch recent analyses (optional)
+        echo "Recent analyses (top 5):"
+        curl -s -u "${SONAR_TOKEN}:" "${SONAR_HOST_URL}/api/project_analyses/search?project=${SONAR_PROJECT_KEY}&ps=5" | python -m json.tool || true
           
