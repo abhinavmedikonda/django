@@ -36,6 +36,8 @@ jobs:
         args: >
           -Dsonar.projectKey=django
           -Dsonar.organization=abhinavmedikonda
+          -Dsonar.python.coverage.reportPaths=coverage.xml
+          -Dsonar.qualitygate.wait=true
     - name: sonarQube-quality-gate-check
       id: qualitygate
       uses: SonarSource/sonarqube-quality-gate-action@cf038b0e0cdecfa9e56c198bbb7d21d751d62c3b
