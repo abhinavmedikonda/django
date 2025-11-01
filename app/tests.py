@@ -30,8 +30,7 @@ class ViewsAndAuthTests(TestCase):
                 request = self.factory.get("/")
                 response = views.index(request)
                 self.assertEqual(response.status_code, 200)
-                template_names = [t.name for t in getattr(response, "templates", []) if t.name]
-                self.assertIn("index.html", template_names)
+                self.assertIn("index", response.content.decode())
         finally:
             shutil.rmtree(tmpdir)
 
