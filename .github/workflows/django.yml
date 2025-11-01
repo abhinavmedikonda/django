@@ -15,7 +15,7 @@ jobs:
         python-version: [3.8, 3.9]
       fail-fast: false
     steps:
-    - uses: actions/checkout@eef61447b9ff7b940639d9bdead48c1d3f6a6e5a # v4.2.2
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4.2.2
     - name: set-up-python-${{ matrix.python-version }}
       uses: actions/setup-python@9e1c7f25bc9b7ce7a4e828b8c1ad2913e6da26a9 # v5.1.0
       with:
@@ -36,7 +36,7 @@ jobs:
         python-version: [3.8, 3.9]
       fail-fast: false
     steps:
-    - uses: actions/checkout@eef61447b9ff7b940639d9bdead48c1d3f6a6e5a # v4.2.2
+    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v4.2.2
     - name: sonar-scan
       uses: SonarSource/sonarqube-scan-action@689fb39b34b9aa95ebc5f8f119343ddd51542402 # v6
       env:
