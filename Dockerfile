@@ -23,7 +23,7 @@ RUN pip3 wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 ##########################
 # Stage 2: Runtime (Python slim)
 ##########################
-FROM python:3.11-slim-bookworm
+FROM python:3.10-slim
 
 WORKDIR /app
 
