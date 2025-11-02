@@ -65,12 +65,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: sonar
     steps:
-    - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-    - name: login-to-gitHub-container-registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    - name: build-docker-image
-      run: |
-        docker build -t ghcr.io/${{ github.repository }}:latest .
-    - name: push-docker-image
-      run: |
-        docker push ghcr.io/${{ github.repository }}:latest
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+      - name: docker-login
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: docker-build-push
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
