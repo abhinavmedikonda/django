@@ -30,19 +30,19 @@ jobs:
         coverage xml
     # Save coverage report so next job can access it
     - name: upload-coverage-report
-      uses: actions/upload-artifact@65462800fd760344b1a5e535b65b84d44e3b452c
+      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
       with:
         name: coverage-${{ matrix.python-version }}
         path: coverage.xml
   
   sonar:
     runs-on: ubuntu-latest
-    needs: build  # run only after tests complete successfully
+    needs: build
     steps:
     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-    # Download one coverage artifact (choose 3.9 or combine)
+    # Download specific uploaded artifict
     - name: download-coverage-report
-      uses: actions/download-artifact@fa8f3b8f6a8f5b7565b6929a239a15c228ea6b64
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53
       with:
         name: coverage-3.9
     - name: sonar-scan
