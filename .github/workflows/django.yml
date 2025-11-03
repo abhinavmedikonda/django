@@ -64,6 +64,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: sonar
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: docker-login
@@ -77,4 +80,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:latest
