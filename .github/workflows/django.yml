@@ -87,11 +87,13 @@ jobs:
         with:
           name: zap-report
           path: report_html.html
+      - name: save-docker-image-as-artifact
+        run: docker save django-image -o django-image.tar
       - name: upload-docker-image
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: django-image
-          path: django-image
+          path: django-image.tar
 
   docker:
     runs-on: ubuntu-latest
@@ -113,7 +115,7 @@ jobs:
           name: django-image
           path: .
       - name: load-docker-image
-        run: docker load -i django-image
+        run: docker load -i django-image.tar
       - name: tag-image-for-ghcr
         run: docker tag django-image ghcr.io/${{ github.repository }}:latest
       - name: push-image-to-ghcr
