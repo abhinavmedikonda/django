@@ -82,11 +82,16 @@ jobs:
           fail_action: false  # don’t fail pipeline on minor issues
           rules_file_name: ".zap-rules.tsv"
           cmd_options: "-a"
-      - name: Upload ZAP report
-        uses: actions/upload-artifact@v4
+      - name: upload-zap-report
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
           name: zap-report
           path: report_html.html
+      - name: upload-docker-image
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: docker-image
+          path: django-app
 
   docker:
     runs-on: ubuntu-latest
@@ -102,9 +107,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: docker-build-push
-        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
+      - name: download-image-artifact
+        uses: actions/download-artifact@v4
         with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          name: django-app
+          path: .
+      - name: load-docker-image
+        run: docker load -i django-app
+      - name: tag-image-for-ghcr
+        run: docker tag django-app ghcr.io/${{ github.repository }}:latest
+      - name: push-image-to-ghcr
+        run: docker push ghcr.io/${{ github.repository }}:latest
