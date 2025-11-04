@@ -73,7 +73,7 @@ jobs:
       - name: run-django-app
         run: docker run -d -p 8000:8000 django-app
       - name: run-owasp-zap-baseline-scan
-        uses: zaproxy/action-baseline@vde8ad967d3548d44ef623df22cf95c3b0baf8b25
+        uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25
         with:
           target: "http://localhost:8000"
           fail_action: false  # don’t fail pipeline on minor issues
