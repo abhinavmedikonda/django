@@ -72,9 +72,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
       - name: build-docker-image
-        run: docker build -t django-app .
-      - name: run-django-app
-        run: docker run -d -p 8000:8000 django-app
+        run: docker build -t django-image .
+      - name: run-django-image
+        run: docker run -d -p 8000:8000 django-image
       - name: run-owasp-zap-baseline-scan
         uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25
         with:
@@ -90,8 +90,8 @@ jobs:
       - name: upload-docker-image
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
         with:
-          name: docker-image
-          path: django-app
+          name: django-image
+          path: django-image
 
   docker:
     runs-on: ubuntu-latest
@@ -110,11 +110,11 @@ jobs:
       - name: download-image-artifact
         uses: actions/download-artifact@v4
         with:
-          name: django-app
+          name: django-image
           path: .
       - name: load-docker-image
-        run: docker load -i django-app
+        run: docker load -i django-image
       - name: tag-image-for-ghcr
-        run: docker tag django-app ghcr.io/${{ github.repository }}:latest
+        run: docker tag django-image ghcr.io/${{ github.repository }}:latest
       - name: push-image-to-ghcr
         run: docker push ghcr.io/${{ github.repository }}:latest
